@@ -76,6 +76,8 @@ Du er allerede på riktig side — det er dette repoet du skal forke. Sørg bare
    - Hovedvinduet hvor du kan redigere kode
 3. Du er nå klar til å begynne med øvingen!
 
+> **💡 Pro tip:** Du kan trykke `.` (punktum) når du står på hovedsiden til et GitHub-repo for å åpne det direkte i en nettleser-basert VS Code-editor (`github.dev`). Fint for raske filredigeringer! Merk at denne varianten ikke har terminal, så for å faktisk kompilere og kjøre kode må du bruke Codespace-flyten over.
+
 ## Del 3: Kjør din første kode
 
 I dette repoet ligger det en liten Java-fil, `Hello.java`, som skriver ut en hilsen. Repoet har en `.devcontainer/devcontainer.json` som sørger for at Codespacet ditt får en moderne Java-versjon (Java 21) automatisk — så du kan kjøre koden med én gang.
