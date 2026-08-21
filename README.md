@@ -1,22 +1,35 @@
-# Veiledning for studenter: Slik jobber du med øvinger på GitHub
+# Slik jobber du med øvinger på GitHub Codespaces
 
 Hva er GitHub Codespaces?
 GitHub Codespaces er et utviklingsmiljø i skyen som kjører direkte i nettleseren. Det gir deg tilgang til Visual Studio Code med alle filene 
 fra prosjektet ditt, slik at du kan programmere, teste og lagre endringer uten å måtte installere noe på din egen PC.
 
-Gratiskvoten på Codespaces er ganske "romslig" 
+Gratiskvoten på Codespaces er ganske "romslig"
+
+## Hva lærer du i denne øvingen?
+
+Etter denne øvingen skal du kunne:
+- Lage din egen kopi (fork) av et GitHub-repository
+- Åpne repoet i et Codespace og bli kjent med VS Code i nettleseren
+- Lagre endringene dine tilbake til GitHub (commit + sync)
+
+**Dette repoet ER øvingen** — du trenger ikke lete etter et annet. Bare følg stegene under og bruk denne siden som utgangspunkt.
+
+Alle øvingene i semesteret følger det samme mønsteret: fork → åpne i Codespace → gjør endringer → commit og sync. Når du har fått det til én gang, kjenner du igjen flyten resten av semesteret.
+
+I dette semesteret kommer vi til å bruke terminalen mye. Er du fersk på kommandolinja? Se [README_TERMINAL_CHEAT.md](README_TERMINAL_CHEAT.md) for en kort jukselapp med de vanligste kommandoene (`pwd`, `cd`, `ls`, `echo` osv.).
 
 <img width="813" height="455" alt="image" src="https://github.com/user-attachments/assets/28cbcbd5-dfc1-43fb-8c41-76b5a98ea1a3" />
 
-## Del 1: Leg en Fork repository med øvingen
+## Del 1: Lag en fork av øvingsrepositoryet
 
-### Steg 1: Finn øvingsrepositoryet
+### Steg 1: Åpne dette repoet på GitHub
 1. Åpne nettleseren og gå til GitHub (github.com)
 2. Logg inn med din GitHub-konto (opprett konto først hvis du ikke har)
-3. Gå til lenken til øvingsrepositoryet som læreren har delt med deg. Hvis dette er din første øving - kan du gjerne bruke dette repositoryet som et eksempel!
+3. Sørg for at du er inne på denne siden — det er dette repoet du skal forke.
 
 ### Steg 2: Lag en fork
-1. Når du er inne på øvingsrepositoryet, klikk på **"Fork"**-knappen øverst til høyre på siden
+1. Klikk på **"Fork"**-knappen øverst til høyre på siden
    - Knappen ser ut som en gaffel-ikon med tallet på antall forks ved siden av
 2. Du kommer nå til en side som heter "Create a new fork"
 3. **VIKTIG**: La følgende innstillinger stå som de er:
@@ -55,6 +68,104 @@ Gratiskvoten på Codespaces er ganske "romslig"
    - En terminal nederst hvor du kan kjøre kommandoer
    - Hovedvinduet hvor du kan redigere kode
 3. Du er nå klar til å begynne med øvingen!
+
+## Del 3: Kjør din første kode
+
+I dette repoet ligger det en liten Java-fil, `Hello.java`, som skriver ut en hilsen. Repoet har en `.devcontainer/devcontainer.json` som sørger for at Codespacet ditt får en moderne Java-versjon (Java 21) automatisk — så du kan kjøre koden med én gang.
+
+### Slik bruker du terminalen
+Terminalen er vinduet nederst i VS Code hvor du skriver inn kommandoer. Hvis du ikke ser den, åpne den med **Ctrl + `** (backtick) eller via menyen: **Terminal → New Terminal**.
+
+Kommandoer skrives inn og kjøres med **Enter**. Prøv for eksempel:
+
+```
+ls
+```
+
+Denne kommandoen viser alle filene i mappa du står i — du skal se `Hello.java` i lista.
+
+### Kjør Java-programmet
+Skriv følgende i terminalen og trykk Enter:
+
+```
+javac Hello.java
+java Hello
+```
+
+Første linje kompilerer koden til en `.class`-fil, andre linje kjører den. Hvis alt fungerer, skal du se `Hei fra Codespace!` i terminalen.
+
+### Prøv å endre koden
+Åpne `Hello.java`, endre teksten inne i `System.out.println(...)` til noe eget, lagre (**Ctrl + S**), og kjør kommandoene på nytt. Da har du både redigert og kjørt din første kode i skyen.
+
+## Del 4: Avansert — installer Kotlin og kjør en Kotlin-fil
+
+Java er forhåndsinstallert i Codespaces, men **Kotlin** er det ikke. I denne oppgaven skal du installere Kotlin selv og kjøre `Hello.kt` som allerede ligger i repoet.
+
+### Steg 1: Sjekk at Kotlin ikke finnes
+Prøv først:
+
+```
+kotlinc -version
+```
+
+Du får sannsynligvis `command not found`. Det er forventet.
+
+### Steg 2: Installer Kotlin med SDKMAN
+SDKMAN er en pakkebehandler for JVM-språk og er forhåndsinstallert i Codespaces. Kjør:
+
+```
+sdk install kotlin
+```
+
+Svar `Y` hvis den spør om å sette versjonen som default. Når det er ferdig, sjekk at det virket:
+
+```
+kotlinc -version
+```
+
+### Steg 3: Kompiler og kjør
+```
+kotlinc Hello.kt -include-runtime -d Hello.jar
+java -jar Hello.jar
+```
+
+Du skal nå se `Hei fra Kotlin i Codespace!` i terminalen.
+
+### Bonus: Gjør det permanent med en devcontainer
+Installasjonen med SDKMAN forsvinner hvis codespacet slettes. For at Kotlin skal være tilgjengelig automatisk hver gang, kan du legge til en `.devcontainer/devcontainer.json` med Kotlin som *feature*. Se [containers.dev/features](https://containers.dev/features) for hvordan det gjøres.
+
+### Steg 4: Legg til en VS Code-extension i devcontaineren
+
+Åpne fila `.devcontainer/devcontainer.json` i repoet. Under `customizations.vscode.extensions` finner du en liste over extensions som installeres automatisk når Codespacet bygges. I dag ligger bare Java-extension-pakken der.
+
+Legg til en extension du selv har lyst på — for eksempel:
+
+- `eamodio.gitlens` — viser hvem som har skrevet hver linje kode (Git blame direkte i editoren)
+- `streetsidesoftware.code-spell-checker` — stavekontroll for kode og markdown
+- `pkief.material-icon-theme` — penere filikoner i utforskeren
+
+Etter endringen ser lista f.eks. slik ut:
+
+```json
+"extensions": [
+    "vscjava.vscode-java-pack",
+    "eamodio.gitlens"
+]
+```
+
+Husk å lagre fila (**Ctrl + S**).
+
+### Hvorfor virker det ikke med en gang?
+
+Innholdet i `devcontainer.json` leses **kun når Codespacet bygges**. Endringer du gjør i fila trer *ikke* i kraft før du bygger containeren på nytt. En vanlig `Reload Window` eller lukk-og-åpne-fane er ikke nok.
+
+Slik gjør du det:
+
+1. Åpne kommando-paletten: **Ctrl + Shift + P** (Cmd + Shift + P på Mac)
+2. Skriv `Rebuild Container` og velg **Codespaces: Rebuild Container**
+3. Vent 1–3 minutter mens Codespacet bygges på nytt
+
+Når det er ferdig, skal den nye extension-en være installert. Du kan sjekke det i Extensions-panelet i venstre meny (firkant-ikonet).
 
 ## Viktige tips
 
