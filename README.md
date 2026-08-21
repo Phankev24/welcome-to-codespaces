@@ -4,8 +4,6 @@ Hva er GitHub Codespaces?
 GitHub Codespaces er et utviklingsmiljø i skyen som kjører direkte i nettleseren. Det gir deg tilgang til Visual Studio Code med alle filene 
 fra prosjektet ditt, slik at du kan programmere, teste og lagre endringer uten å måtte installere noe på din egen PC.
 
-Gratiskvoten på Codespaces er ganske "romslig"
-
 ## Hva lærer du i denne øvingen?
 
 Etter denne øvingen skal du kunne:
@@ -19,7 +17,18 @@ Alle øvingene i semesteret følger det samme mønsteret: fork → åpne i Codes
 
 I dette semesteret kommer vi til å bruke terminalen mye. Er du fersk på kommandolinja? Se [README_TERMINAL_CHEAT.md](README_TERMINAL_CHEAT.md) for en kort jukselapp med de vanligste kommandoene (`pwd`, `cd`, `ls`, `echo` osv.).
 
+## Koster det noe å bruke Codespaces?
+
+Codespaces er en betalt tjeneste hos GitHub, men alle studentkontoer får en romslig **gratiskvote** hver måned — nok til å dekke øvingene i dette faget uten at det koster deg noe. Kvoten måles i **core-timer** (antall CPU-kjerner × timer aktivt bruk) og **lagring** (GB pr. måned).
+
+Bildet under viser hva den gratis kvoten inneholder i skrivende stund:
+
 <img width="813" height="455" alt="image" src="https://github.com/user-attachments/assets/28cbcbd5-dfc1-43fb-8c41-76b5a98ea1a3" />
+
+**Tips for å ikke gå tom for kvote:**
+- Stopp Codespacet når du er ferdig for dagen (github.com/codespaces → Stop)
+- Slett gamle codespaces du ikke bruker lenger
+- Codespaces stopper automatisk etter 30 minutter uten aktivitet
 
 ## Del 1: Lag en fork av øvingsrepositoryet
 
