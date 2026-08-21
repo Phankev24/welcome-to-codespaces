@@ -1,5 +1,5 @@
 public class Hello {
     public static void main(String[] args) {
-        System.out.println("Hei fra Codespace!");
+        System.out.println("Første kode i cloud");
     }
 }
