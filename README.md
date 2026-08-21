@@ -208,8 +208,9 @@ Eksempel — legg til AWS CLI ved å utvide `features`-blokken:
 **Vanlige fallgruver:**
 
 - **Skrivefeil i URL-en** — `ghcr.io` (én `g`), ikke `gghcr.io`. Kopier fra features-siden.
-- **Tallet etter kolon** (f.eks. `:1`) er *versjonen av featuren*, ikke av verktøyet. Vanligvis skal denne stå som `1`.
-- **`version`-feltet** inne i objektet gjelder verktøyet (AWS CLI, Java osv.). Bruk `"latest"` hvis du er usikker — ikke gjett på tall.
+- **Tallet etter kolon** (f.eks. `:1`) er *featurens major-versjon*, ikke av verktøyet. Vanligvis skal denne stå som `1`.
+- **Versjonsnummeret på containers.dev/features** (f.eks. `1.1.4` ved siden av `aws-cli`) er *featurens egen release-versjon* — altså versjonen av installasjonsskriptet. Det er **ikke** verdien du skal skrive i `"version"`-feltet. Hvis du gjør det, feiler bygget fordi det ikke finnes noen AWS CLI 1.1.4.
+- **`version`-feltet inne i objektet** gjelder verktøyet (AWS CLI, Java osv.). Bruk `"latest"` hvis du er usikker — ikke gjett på tall.
 - **Komma mangler eller er på feil sted** — når du legger til en ny feature, må det være komma etter den forrige (men ikke etter den siste).
 
 ### Hvorfor virker det ikke med en gang?
