@@ -32,10 +32,8 @@ Bildet under viser hva den gratis kvoten inneholder i skrivende stund:
 
 ## Del 1: Lag en fork av øvingsrepositoryet
 
-### Steg 1: Åpne dette repoet på GitHub
-1. Åpne nettleseren og gå til GitHub (github.com)
-2. Logg inn med din GitHub-konto (opprett konto først hvis du ikke har)
-3. Sørg for at du er inne på denne siden — det er dette repoet du skal forke.
+### Steg 1: Logg inn på GitHub
+Du er allerede på riktig side — det er dette repoet du skal forke. Sørg bare for at du er logget inn med din egen GitHub-konto (øverst til høyre). Har du ikke konto ennå, opprett en først på [github.com/signup](https://github.com/signup).
 
 ### Steg 2: Lag en fork
 1. Klikk på **"Fork"**-knappen øverst til høyre på siden
