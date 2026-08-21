@@ -143,17 +143,39 @@ Du skal nå se `Hei fra Kotlin i Codespace!` i terminalen.
 ### Bonus: Gjør det permanent med en devcontainer
 Installasjonen med SDKMAN forsvinner hvis codespacet slettes. For at Kotlin skal være tilgjengelig automatisk hver gang, kan du legge til en `.devcontainer/devcontainer.json` med Kotlin som *feature*. Se [containers.dev/features](https://containers.dev/features) for hvordan det gjøres.
 
-### Steg 4: Legg til en VS Code-extension i devcontaineren
+### Steg 4: Bli kjent med `.devcontainer/devcontainer.json`
 
-Åpne fila `.devcontainer/devcontainer.json` i repoet. Under `customizations.vscode.extensions` finner du en liste over extensions som installeres automatisk når Codespacet bygges. I dag ligger bare Java-extension-pakken der.
+Åpne fila `.devcontainer/devcontainer.json` i repoet. Dette er "oppskriften" for Codespacet ditt — GitHub leser fila hver gang miljøet bygges, og installerer det som står der. Her er de viktigste delene:
 
-Legg til en extension du selv har lyst på — for eksempel:
+```json
+{
+    "image": "mcr.microsoft.com/devcontainers/java:21",  // base-image
+    "features": { ... },                                  // ekstra verktøy
+    "customizations": {
+        "vscode": {
+            "extensions": [ ... ]                         // VS Code-utvidelser
+        }
+    },
+    "postCreateCommand": "..."                            // kjøres etter bygg
+}
+```
 
-- `eamodio.gitlens` — viser hvem som har skrevet hver linje kode (Git blame direkte i editoren)
+Fila er i **JSON**-format. Det betyr blant annet:
+- Alle nøkler og strenger må stå i `"anførselstegn"`
+- Komma mellom hvert element — **men ikke komma etter det siste**
+- Krøllparenteser `{}` for objekter, hakeparenteser `[]` for lister
+
+VS Code markerer JSON-feil med rød understreking. Hold musepekeren over for å se hva som er galt.
+
+### Steg 5: Legg til en VS Code-extension
+
+Under `customizations.vscode.extensions` finner du extensions som installeres automatisk. I dag ligger bare Java-pakken der. Legg til en du har lyst på — for eksempel:
+
+- `eamodio.gitlens` — viser hvem som har skrevet hver linje kode
 - `streetsidesoftware.code-spell-checker` — stavekontroll for kode og markdown
 - `pkief.material-icon-theme` — penere filikoner i utforskeren
 
-Etter endringen ser lista f.eks. slik ut:
+Etter endringen:
 
 ```json
 "extensions": [
@@ -162,7 +184,33 @@ Etter endringen ser lista f.eks. slik ut:
 ]
 ```
 
-Husk å lagre fila (**Ctrl + S**).
+Legg merke til komma mellom linjene — men ikke etter den siste. Husk å lagre fila (**Ctrl + S**).
+
+### Steg 6: Legg til en *feature* (f.eks. AWS CLI)
+
+*Features* er ferdige oppskrifter for å installere verktøy som ikke ligger i base-imaget. Du finner alle offisielle features på [containers.dev/features](https://containers.dev/features).
+
+Eksempel — legg til AWS CLI ved å utvide `features`-blokken:
+
+```json
+"features": {
+    "ghcr.io/devcontainers/features/java:1": {
+        "version": "21",
+        "installGradle": false,
+        "installMaven": false
+    },
+    "ghcr.io/devcontainers/features/aws-cli:1": {
+        "version": "latest"
+    }
+}
+```
+
+**Vanlige fallgruver:**
+
+- **Skrivefeil i URL-en** — `ghcr.io` (én `g`), ikke `gghcr.io`. Kopier fra features-siden.
+- **Tallet etter kolon** (f.eks. `:1`) er *versjonen av featuren*, ikke av verktøyet. Vanligvis skal denne stå som `1`.
+- **`version`-feltet** inne i objektet gjelder verktøyet (AWS CLI, Java osv.). Bruk `"latest"` hvis du er usikker — ikke gjett på tall.
+- **Komma mangler eller er på feil sted** — når du legger til en ny feature, må det være komma etter den forrige (men ikke etter den siste).
 
 ### Hvorfor virker det ikke med en gang?
 
@@ -174,7 +222,11 @@ Slik gjør du det:
 2. Skriv `Rebuild Container` og velg **Codespaces: Rebuild Container**
 3. Vent 1–3 minutter mens Codespacet bygges på nytt
 
-Når det er ferdig, skal den nye extension-en være installert. Du kan sjekke det i Extensions-panelet i venstre meny (firkant-ikonet).
+Hvis byggingen feiler, får du et panel med byggeloggen. Feilmeldingen står nesten alltid nederst — vanligvis peker den rett på linjenummeret i `devcontainer.json` som er problemet. Velg **"Rebuild with Recovery Mode"** for å komme tilbake til et fungerende miljø hvor du kan rette fila.
+
+Når byggingen er ferdig, kan du sjekke at ting virker:
+- Ny extension: se Extensions-panelet i venstre meny (firkant-ikonet)
+- Ny feature (f.eks. AWS CLI): kjør `aws --version` i terminalen
 
 ## Viktige tips
 
